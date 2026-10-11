@@ -1,22 +1,27 @@
-# Registro de interações com o agente
+# Interações com o Cursor
 
-## Pedido
+## 1
 
-Criar uma API REST em Java 21 e Spring Boot, com SQLite em memória via Spring Data JPA e Hibernate, para a categoria Pior Filme do Golden Raspberry Awards.
+Pedi uma API REST em Java 21 e Spring Boot, com SQLite em memória, Spring Data JPA e Hibernate, para a lista de indicados e vencedores da categoria Pior Filme.
 
-O serviço deve ler `Movielist.csv` na inicialização. O endpoint deve devolver o produtor com o maior intervalo entre dois prêmios consecutivos e o que ganhou dois prêmios no menor intervalo, no formato `min` e `max` com `producer`, `interval`, `previousWin` e `followingWin`.
+O serviço deveria ler `C:\Users\mateu\Downloads\back-end-ai-test\Movielist.csv` na inicialização. A API deveria devolver o produtor com o maior intervalo entre dois prêmios consecutivos e o que ganhou dois prêmios mais rápido, no formato da página 2. Também pedi Richardson nível 2, somente testes de integração, banco embarcado sem instalação externa, um README e um repositório local chamado `outsera-movie-list-challenge`.
 
-Restrições pedidas: Richardson nível 2, somente testes de integração, banco embarcado em memória, README com instruções de execução e de teste, e repositório local `outsera-movie-list-challenge`.
+O Cursor leu o CSV e o PDF, confirmou o resultado da lista oficial (Joel Silver, 1990–1991, intervalo 1; Matthew Vaughn, 2002–2015, intervalo 13) e montou o plano da API `GET /producers/award-intervals`.
 
-## Decisões
+## 2
 
-- Spring Boot 3.5.16, porque o gerador público já só oferece a linha 4 e a versão 3.5 pedida continua no Maven Central.
-- `GET /producers/award-intervals` com status `200` e `application/json`.
-- SQLite compartilhado no processo: `jdbc:sqlite:file:${app.datasource-name}?mode=memory&cache=shared`, com uma conexão no pool para o banco em memória não desaparecer.
-- Produtores separados por vírgula e por ` and `. O caso `, and ` é normalizado antes da divisão. Intervalos usam vitórias consecutivas do mesmo produtor; dois prêmios no mesmo ano valem intervalo `0`.
-- Cada contexto de teste usa um nome próprio de banco em memória, para a lista oficial e o CSV de empates não se misturarem.
-- Nenhuma skill pronta do Cursor se aplicava a este serviço. A implementação seguiu a especificação do PDF e o CSV em `Downloads\back-end-ai-test`.
+Pedi para implementar o plano.
 
-## Verificação
+O Cursor criou a pasta do projeto, iniciou o Git e gerou a aplicação em Spring Boot 3.5.16. O gerador público só oferecia Spring Boot 4, então o Maven Wrapper foi copiado à parte. A aplicação carrega o CSV ao subir, grava os filmes no SQLite em memória e expõe o endpoint. Os dois testes de integração passaram. O README foi escrito. O commit inicial não foi feito porque o Git da máquina não tinha nome nem e-mail configurados.
 
-`mvnw.cmd test` executou `AwardIntervalOfficialDatasetTest` e `AwardIntervalTiedDatasetTest` sem falhas. O resultado oficial é Joel Silver (1990–1991, intervalo 1) e Matthew Vaughn (2002–2015, intervalo 13).
+## 3
+
+Pedi para o README explicar como usar outro dataset, substituindo o arquivo ou apontando o caminho desejado.
+
+O Cursor atualizou o README. Dá para trocar `src/main/resources/Movielist.csv` por outro arquivo com o mesmo nome e o mesmo formato, ou subir a aplicação apontando o caminho:
+
+```bat
+mvnw.cmd spring-boot:run -- --app.csv-location=file:C:\caminho\dataset.csv
+```
+
+O CSV precisa do cabeçalho `year;title;studios;producers;winner` e do separador `;`.
