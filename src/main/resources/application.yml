@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:file:${app.datasource-name}?mode=memory&cache=shared
+    driver-class-name: org.sqlite.JDBC
+    hikari:
+      maximum-pool-size: 1
+      minimum-idle: 1
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+
+app:
+  csv-location: classpath:Movielist.csv
+  datasource-name: movielist
