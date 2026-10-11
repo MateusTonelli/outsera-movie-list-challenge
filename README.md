@@ -24,6 +24,26 @@ Linux ou macOS:
 
 A API sobe em `http://localhost:8080`.
 
+## Usar outro dataset
+
+O arquivo padrão é `src/main/resources/Movielist.csv`, lido pela propriedade `app.csv-location` (`classpath:Movielist.csv`). O CSV precisa do cabeçalho `year;title;studios;producers;winner` e do separador `;`.
+
+Para carregar outra lista, substitua esse arquivo por um CSV com o mesmo nome e o mesmo formato, ou aponte `app.csv-location` para o caminho desejado.
+
+Windows:
+
+```bat
+mvnw.cmd spring-boot:run -- --app.csv-location=file:C:\caminho\dataset.csv
+```
+
+Linux ou macOS:
+
+```bash
+./mvnw spring-boot:run -- --app.csv-location=file:/caminho/dataset.csv
+```
+
+O prefixo `file:` indica um arquivo no disco. Com `classpath:`, o arquivo precisa estar em `src/main/resources`.
+
 ## Rodar os testes de integração
 
 Windows:
