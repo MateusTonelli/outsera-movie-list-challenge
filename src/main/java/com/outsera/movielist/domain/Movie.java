@@ -1,11 +1,17 @@
 package com.outsera.movielist.domain;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
@@ -30,6 +36,11 @@ public class Movie {
     @Column(nullable = false)
     private boolean winner;
 
+    @ElementCollection
+    @CollectionTable(name = "movie_producers", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "producer", nullable = false, length = 500)
+    private List<String> producerNames = new ArrayList<>();
+
     protected Movie() {
     }
 
@@ -39,6 +50,7 @@ public class Movie {
         this.studios = studios;
         this.producers = producers;
         this.winner = winner;
+        this.producerNames = new ArrayList<>(ProducerNames.parse(producers));
     }
 
     public Long getId() {
